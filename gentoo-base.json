@@ -1,7 +1,8 @@
 {
     "variables": {
-        "iso_url": "http://mirror.eu.oneandone.net/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/20181113T214502Z/install-amd64-minimal-20181113T214502Z.iso",
-        "iso_checksum_url": "http://mirror.eu.oneandone.net/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/20181113T214502Z/install-amd64-minimal-20181113T214502Z.iso.DIGESTS",
+        "stage3_timestamp": "20181113T214502Z",
+        "stage3_autobuild_mirror": "http://mirror.eu.oneandone.net/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds",
+        "stage3_tarfile_extension": ".tar.xz",
         "iso_checksum_type": "sha512",
         "headless": "false",
         "disk_size": "204800",
@@ -19,8 +20,8 @@
                 ["modifyvm", "{{.Name}}", "--nic1", "nat"],
                 ["modifyvm", "{{.Name}}", "--audio", "none"]
             ],
-            "iso_url": "{{ user `iso_url` }}",
-            "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+            "iso_url": "{{ user `stage3_autobuild_mirror` }}/{{ user `stage3_timestamp` }}/install-amd64-minimal-{{ user `stage3_timestamp` }}.iso",
+            "iso_checksum_url": "{{ user `stage3_autobuild_mirror` }}/{{ user `stage3_timestamp` }}/install-amd64-minimal-{{ user `stage3_timestamp` }}.iso.DIGESTS",
             "iso_checksum_type": "{{ user `iso_checksum_type` }}",
             "guest_os_type": "Gentoo_64",
             "guest_additions_mode": "disable",
