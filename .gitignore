@@ -1,0 +1,4 @@
+output*
+packer_cache/
+.vagrant
+private/
