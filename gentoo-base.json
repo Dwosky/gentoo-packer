@@ -1,0 +1,60 @@
+{
+    "variables": {
+        "iso_url": "http://mirror.eu.oneandone.net/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/20181113T214502Z/install-amd64-minimal-20181113T214502Z.iso",
+        "iso_checksum_url": "http://mirror.eu.oneandone.net/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/20181113T214502Z/install-amd64-minimal-20181113T214502Z.iso.DIGESTS",
+        "iso_checksum_type": "sha512",
+        "headless": "false",
+        "disk_size": "204800",
+        "ssh_username": "root",
+        "ssh_password": "vagrant",
+        "ssh_timeout": "20m",
+        "vm_name": "Gentoo_Vagrant"
+    },
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "vboxmanage": [
+                ["modifyvm", "{{.Name}}", "--memory", "2048"],
+                ["modifyvm", "{{.Name}}", "--cpus", "2"],
+                ["modifyvm", "{{.Name}}", "--nic1", "nat"],
+                ["modifyvm", "{{.Name}}", "--audio", "none"]
+            ],
+            "iso_url": "{{ user `iso_url` }}",
+            "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+            "guest_os_type": "Gentoo_64",
+            "guest_additions_mode": "disable",
+            "boot_wait": "5s",
+            "boot_command": [
+                "gentoo-nofb<enter><wait10s><enter><wait40s>",
+                "passwd {{ user `ssh_username` }}<enter><wait>",
+                "{{ user `ssh_password` }}<enter><wait>",
+                "{{ user `ssh_password` }}<enter><wait>",
+                "sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config<enter><wait>",
+                "echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config<enter><wait>",
+                "/etc/init.d/sshd start<enter><wait>"
+            ],
+            "disk_size": "{{ user `disk_size` }}",
+            "hard_drive_interface": "sata",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "shutdown_command": "shutdown -hP now",
+            "vm_name": "{{ user `vm_name` }}",
+            "headless" : "{{ user `headless`}}"
+        }
+    ],
+    "description": "Gentoo Stage 3 Installation (VirtualBox)",
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "provision.sh"
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "output": "output/gentoo-amd64-stage3-virtualbox.box"
+        }
+    ]
+}
