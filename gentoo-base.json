@@ -10,14 +10,18 @@
         "ssh_username": "root",
         "ssh_password": "vagrant",
         "ssh_timeout": "20m",
+        "install_mountpoint": "/mnt/gentoo",
+        "box_disk": "/dev/sda",
+        "box_n_cpus": "2",
+        "box_ram": "2048",
         "vm_name": "Gentoo_Vagrant"
     },
     "builders": [
         {
             "type": "virtualbox-iso",
             "vboxmanage": [
-                ["modifyvm", "{{.Name}}", "--memory", "2048"],
-                ["modifyvm", "{{.Name}}", "--cpus", "2"],
+                ["modifyvm", "{{.Name}}", "--memory", "{{ user `box_ram` }}"],
+                ["modifyvm", "{{.Name}}", "--cpus", "{{ user `box_n_cpus` }}"],
                 ["modifyvm", "{{.Name}}", "--nic1", "nat"],
                 ["modifyvm", "{{.Name}}", "--audio", "none"]
             ],
