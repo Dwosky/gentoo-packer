@@ -3,6 +3,7 @@
         "stage3_timestamp": "20181113T214502Z",
         "stage3_autobuild_mirror": "http://mirror.eu.oneandone.net/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds",
         "stage3_tarfile_extension": ".tar.xz",
+        "stage3_mirror_region": "Europe",
         "iso_checksum_type": "sha512",
         "headless": "false",
         "disk_size": "204800",
