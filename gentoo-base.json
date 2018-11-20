@@ -53,8 +53,21 @@
     "description": "Gentoo Stage 3 Installation (VirtualBox)",
     "provisioners": [
         {
+            "type": "file",
+            "source": "scripts",
+            "destination": "/tmp"
+        },
+        {
             "type": "shell",
-            "script": "provision.sh"
+            "script": "provision.sh",
+            "environment_vars": [
+                "BASE_DIR={{ user `install_mountpoint` }}",
+                "DISK={{ user `box_disk` }}",
+                "MIRROR_URL={{ user `stage3_autobuild_mirror` }}/{{ user `stage3_timestamp` }}",
+                "N_CPU={{ user `box_n_cpus` }}",
+                "REGION={{ user `stage3_mirror_region` }}",
+                "TARBALL=stage3-amd64-nomultilib-{{ user `stage3_timestamp` }}.tar.xz"
+            ]
         }
     ],
     "post-processors": [
