@@ -3,3 +3,4 @@ packer_cache/
 .vagrant
 private/
 Vagrantfile
+*.log
