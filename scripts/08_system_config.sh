@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "==> Configure hostname"
-sed -i 's/hostname=.*/hostname=\"gentoo-box\"//g' ${BASE_DIR}/etc/conf.d/hostname
+sed -i 's/hostname=.*/hostname=\"gentoo-box\"/g' ${BASE_DIR}/etc/conf.d/hostname
 
 echo "==> Configure networking"
 chroot ${BASE_DIR} /bin/bash << 'EOF'
