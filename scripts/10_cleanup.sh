@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo "==> Cleaning news items"
+chroot ${BASE_DIR} /bin/bash << 'EOF'
+    eselect news read --quiet
+EOF
+
 echo "==> Cleaning Linux sources"
 chroot ${BASE_DIR} /bin/bash << 'EOF'
     cd /usr/src/linux && make clean
