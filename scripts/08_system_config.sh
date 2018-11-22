@@ -23,6 +23,7 @@ EOF
 echo "==> Installing Virtual Box guest additions"
 chroot ${BASE_DIR} /bin/bash << 'EOF'
     emerge -q app-emulation/virtualbox-guest-additions
+    rc-update add virtualbox-guest-additions default
 EOF
 
 echo "==> Configuring SSH daemon to autostart"
