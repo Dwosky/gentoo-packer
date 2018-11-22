@@ -3,7 +3,7 @@
 echo "==> Installing sudo"
 echo "app-admin/sudo -sendmail" >> ${BASE_DIR}/etc/portage/package.use/sudo
 chroot ${BASE_DIR} /bin/bash << 'EOF'
-    USE="-sendmail" emerge -q app-admin/sudo
+    emerge -q app-admin/sudo
 EOF
 
 echo "==> Configuring vagrant user and keys"
