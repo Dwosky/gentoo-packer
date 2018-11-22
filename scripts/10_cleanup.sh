@@ -16,12 +16,14 @@ rm -rf ${BASE_DIR}/var/log/*
 rm -rf ${BASE_DIR}/var/tmp/*
 
 echo "==> Consolidating free space"
-chroot ${BASE_DIR} /bin/bash << 'EOF'
-    wget -q http://frippery.org/uml/zerofree-1.1.1.tgz
-    tar xf zerofree-1.1.1.tgz
-    cd zerofree-1.1.1 && make
+ZEROFREE="zerofree-1.1.1"
+chroot ${BASE_DIR} /bin/bash << EOF
+    wget -q http://frippery.org/uml/${ZEROFREE}.tgz
+    tar xf ${ZEROFREE}.tgz
+    cd ${ZEROFREE} && make
 EOF
-mv ${BASE_DIR}/zerofree-1.1.1 /tmp/zerofree
+mv ${BASE_DIR}/${ZEROFREE} /tmp/zerofree
+rm ${BASE_DIR}/${ZEROFREE}.tgz
 mount -o remount,ro /mnt/gentoo
 /tmp/zerofree/zerofree ${DISK}4
 swapoff ${DISK}3
