@@ -11,5 +11,5 @@ EOF
 
 echo "==> Configure and build the kernel with genkernel"
 chroot ${BASE_DIR} /bin/bash << 'EOF'
-    genkernel --install --symlink --no-dmraid --no-zfs --no-btrfs --no-nfs all
+    genkernel --install --no-dmraid --no-zfs --no-btrfs --no-nfs all
 EOF
