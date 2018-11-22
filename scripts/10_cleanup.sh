@@ -29,5 +29,5 @@ dd if=/dev/zero of=${DISK}3
 mkswap ${DISK}3
 
 echo "==> Unmounting the filesystems"
-umount -l /mnt/gentoo/dev{/shm,/pts,/proc,/sys}
+umount -l /mnt/gentoo{/dev,/proc,/sys}
 umount -R /mnt/gentoo
