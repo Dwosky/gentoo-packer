@@ -21,6 +21,8 @@ chroot ${BASE_DIR} /bin/bash << 'EOF'
 EOF
 
 echo "==> Installing Virtual Box guest additions"
+if [ ! -d ${BASE_DIR}/etc/portage/package.accept_keywords ]; then mkdir ${BASE_DIR}/etc/portage/package.accept_keywords; fi
+echo "app-emulation/virtualbox-guest-additions ~amd64" >> ${BASE_DIR}/etc/portage/package.accept_keywords/virtualbox-guest-additions
 chroot ${BASE_DIR} /bin/bash << 'EOF'
     emerge -q app-emulation/virtualbox-guest-additions
     rc-update add virtualbox-guest-additions default
