@@ -12,9 +12,5 @@ mirrorselect -s3 -R ${REGION} -o >> $MAKE_CONF
 
 echo "==> Setup ebuild repository"
 mkdir --parents ${BASE_DIR}/etc/portage/repos.conf
-echo "[DEFAULT]" >> ${BASE_DIR}/etc/portage/repos.conf/webrsync.conf
-echo "main-repo = gentoo" >> ${BASE_DIR}/etc/portage/repos.conf/webrsync.conf
-echo "[gentoo]" >> ${BASE_DIR}/etc/portage/repos.conf/webrsync.conf
-echo "location = /var/db/repos/gentoo" >> ${BASE_DIR}/etc/portage/repos.conf/webrsync.conf
-echo "sync-type = webrsync" >> ${BASE_DIR}/etc/portage/repos.conf/webrsync.conf
-echo "auto-sync = yes" >> ${BASE_DIR}/etc/portage/repos.conf/webrsync.conf
+cp ${BASE_DIR}/usr/share/portage/config/repos.conf ${BASE_DIR}/etc/portage/repos.conf/gentoo.conf
+mkdir --parents ${BASE_DIR}/var/db/repos/gentoo
