@@ -16,3 +16,8 @@ chroot ${BASE_DIR} /bin/bash << 'EOF'
     chown vagrant:vagrant /home/vagrant/.ssh/authorized_keys
     chmod 0600 /home/vagrant/.ssh/authorized_keys
 EOF
+if [ "$VM_TYPE" == "virtualbox" ]; then
+chroot ${BASE_DIR} /bin/bash << 'EOF'
+    usermod -a -G vboxguest
+EOF
+fi
