@@ -12,9 +12,9 @@ EOF
 
 echo "==> Configure GRUB bootloader"
 echo "GRUB_PLATFORMS=\"pc\"" >> ${BASE_DIR}/etc/portage/make.conf
-chroot ${BASE_DIR} /bin/bash << 'EOF'
+cat << 'EOF' | chroot ${BASE_DIR} /bin/bash
     emerge -q sys-boot/grub:2
-    grub-install /dev/sda
+    grub-install ${DISK}
     if [ ! -d /boot/grub ]; then mkdir /boot/grub; fi
     sed -i '/ifnames/s/#*//' /etc/default/grub
     grub-mkconfig -o /boot/grub/grub.cfg
