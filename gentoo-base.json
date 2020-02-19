@@ -14,7 +14,8 @@
         "box_disk": "/dev/sda",
         "box_n_cpus": "2",
         "box_ram": "2048",
-        "vm_name": "Gentoo_Vagrant"
+        "vm_name": "Gentoo_Vagrant",
+        "vm_type": "virtualbox"
     },
     "builders": [
         {
@@ -66,7 +67,8 @@
                 "MIRROR_URL={{ user `stage3_autobuild_mirror` }}/{{ user `stage3_timestamp` }}",
                 "N_CPU={{ user `box_n_cpus` }}",
                 "REGION={{ user `stage3_mirror_region` }}",
-                "TARBALL=stage3-amd64-nomultilib-{{ user `stage3_timestamp` }}.tar.xz"
+                "TARBALL=stage3-amd64-nomultilib-{{ user `stage3_timestamp` }}.tar.xz",
+                "VM_TYPE={{ user `vm_type` }}"
             ]
         }
     ],
