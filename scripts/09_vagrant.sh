@@ -8,7 +8,8 @@ EOF
 
 echo "==> Configuring vagrant user and keys"
 chroot ${BASE_DIR} /bin/bash << 'EOF'
-    useradd --password 'vagrant' --comment 'Vagrant User' --create-home --groups vboxguest --user-group vagrant -s /bin/bash
+    useradd --comment 'Vagrant User' --create-home --user-group vagrant -s /bin/bash
+    echo 'vagrant:vagrant' | chpasswd
     echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/10_vagrant
     install --directory --owner=vagrant --group=vagrant --mode=0700 /home/vagrant/.ssh
     curl --output /home/vagrant/.ssh/authorized_keys --location https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub
