@@ -8,7 +8,7 @@ sed -i "s/COMMON_FLAGS=.*/COMMON_FLAGS=\"-march=native -O2 -pipe\"/g" $MAKE_CONF
 echo "MAKEOPS=\"${MAKE_OPS}\"" >> $MAKE_CONF
 
 echo "==> Selecting the best mirrors in $MAKE_CONF"
-mirrorselect -s3 -R ${REGION} -o >> $MAKE_CONF
+mirrorselect -s3 --region ${REGION} -D -o >> $MAKE_CONF
 
 echo "==> Setup ebuild repository"
 mkdir --parents ${BASE_DIR}/etc/portage/repos.conf
