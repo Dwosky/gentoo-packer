@@ -1,0 +1,85 @@
+{
+	"variables": {
+        "stage3_timestamp": "20200209T214502Z",
+        "stage3_autobuild_mirror": "http://gentoo.mirrors.ovh.net/gentoo-distfiles/releases/amd64/autobuilds",
+        "stage3_tarfile_extension": ".tar.xz",
+        "stage3_mirror_region": "Europe",
+        "iso_checksum_type": "sha512",
+        "headless": "false",
+        "disk_size": "20480",
+        "ssh_username": "root",
+        "ssh_password": "vagrant",
+        "ssh_timeout": "20m",
+        "install_mountpoint": "/mnt/gentoo",
+        "box_disk": "/dev/vda",
+        "box_n_cpus": "6",
+        "box_ram": "4096M",
+        "vm_name": "Gentoo_Vagrant",
+        "vm_type": "qemu"
+    },
+	"builders": [
+		{
+			"type": "qemu",
+            "qemuargs": [
+                [ "-m", "{{ user `box_ram` }}" ],
+                [ "-smp", "cpus={{ user `box_n_cpus` }}" ],
+                [ "-cpu", "host" ],
+                [ "-machine", "type=q35,accel=kvm" ],
+                [ "-display", "gtk" ],
+                [ "-object", "rng-random,id=rng0,filename=/dev/urandom" ],
+                [ "-device", "virtio-rng-pci,rng=rng0" ]
+            ],
+			"format": "qcow2",
+			"iso_url": "{{ user `stage3_autobuild_mirror` }}/{{ user `stage3_timestamp` }}/install-amd64-minimal-{{ user `stage3_timestamp` }}.iso",
+            "iso_checksum_url": "{{ user `stage3_autobuild_mirror` }}/{{ user `stage3_timestamp` }}/install-amd64-minimal-{{ user `stage3_timestamp` }}.iso.DIGESTS",
+            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+            "boot_wait": "5s",
+            "boot_command": [
+                "gentoo-nofb<enter><wait10s><enter><wait40s>",
+                "passwd {{ user `ssh_username` }}<enter><wait>",
+                "{{ user `ssh_password` }}<enter><wait>",
+                "{{ user `ssh_password` }}<enter><wait>",
+                "sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config<enter><wait>",
+                "echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config<enter><wait>",
+                "/etc/init.d/sshd start<enter><wait>"
+            ],
+            "disk_interface": "virtio",
+            "disk_size": "{{ user `disk_size` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "shutdown_command": "shutdown -hP now",
+            "vm_name": "{{ user `vm_name` }}",
+            "headless" : "{{ user `headless`}}"
+		}
+	],
+	"description": "Gentoo Stage 3 Installation (qemu)",
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "scripts",
+            "destination": "/tmp"
+        },
+        {
+            "type": "shell",
+            "script": "provision.sh",
+            "environment_vars": [
+                "BASE_DIR={{ user `install_mountpoint` }}",
+                "DISK={{ user `box_disk` }}",
+                "MIRROR_URL={{ user `stage3_autobuild_mirror` }}/{{ user `stage3_timestamp` }}",
+                "N_CPU={{ user `box_n_cpus` }}",
+                "REGION={{ user `stage3_mirror_region` }}",
+                "TARBALL=stage3-amd64-nomultilib-{{ user `stage3_timestamp` }}.tar.xz",
+                "VM_TYPE={{ user `vm_type` }}"
+            ]
+        }
+    ],
+    "post-processors": [
+        [
+            {
+                "type": "shell-local",
+                "inline": [ "mv output-qemu/{{ user `vm_name` }} output-qemu/{{ user `vm_name` }}.qcow2" ]
+            }
+        ]   
+    ]
+}
