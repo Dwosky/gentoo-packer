@@ -28,5 +28,5 @@ $ packer build gentoo-qemu.json
 
 2. Run the box in [QEMU](https://www.qemu.org/) or your favourite virtualization suite:
 ```
-$ qemu-system-x86_64 -drive file=output-qemu/Gentoo_Vagrant [extra QEMU args]
+$ qemu-system-x86_64 -drive file=output-qemu/Gentoo_Vagrant.qcow2 [extra QEMU args]
 ```
