@@ -1,6 +1,6 @@
 {
 	"variables": {
-        "stage3_timestamp": "20200209T214502Z",
+        "stage3_timestamp": "20201011T214503Z",
         "stage3_autobuild_mirror": "http://gentoo.mirrors.ovh.net/gentoo-distfiles/releases/amd64/autobuilds",
         "stage3_tarfile_extension": ".tar.xz",
         "stage3_mirror_region": "Europe",
@@ -31,8 +31,7 @@
             ],
 			"format": "qcow2",
 			"iso_url": "{{ user `stage3_autobuild_mirror` }}/{{ user `stage3_timestamp` }}/install-amd64-minimal-{{ user `stage3_timestamp` }}.iso",
-            "iso_checksum_url": "{{ user `stage3_autobuild_mirror` }}/{{ user `stage3_timestamp` }}/install-amd64-minimal-{{ user `stage3_timestamp` }}.iso.DIGESTS",
-            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+            "iso_checksum": "file:{{ user `stage3_autobuild_mirror` }}/{{ user `stage3_timestamp` }}/install-amd64-minimal-{{ user `stage3_timestamp` }}.iso.DIGESTS",
             "boot_wait": "5s",
             "boot_command": [
                 "gentoo-nofb<enter><wait10s><enter><wait40s>",
